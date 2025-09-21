@@ -6,7 +6,7 @@
 /*   By: mpazjimenez <maria-j2@student.42malaga.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 18:26:30 by maria-j2          #+#    #+#             */
-/*   Updated: 2025/09/21 15:02:15 by mpazjimenez      ###   ########.fr       */
+/*   Updated: 2025/09/21 18:55:05 by mpazjimenez      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@
 # include <errno.h> // used to handle system errors, such as those returned by kill()
 # include "libft/libft.h"
 
+// client
+int	send_signal(pid_t pid, unsigned char octet);
 
-
-
-
+// server
+void	signal_handler(int signum);
 #endif
