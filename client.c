@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maria-j2 <maria-j2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: mpazjimenez <maria-j2@student.42malaga.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 18:26:08 by maria-j2          #+#    #+#             */
-/*   Updated: 2025/09/19 19:49:21 by maria-j2         ###   ########.fr       */
+/*   Updated: 2025/09/21 15:15:54 by mpazjimenez      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,24 @@ int	main(int argc, char **argv)
 {
 	int	success;
 	int	pid;
+	int	i;
 
+	i = 0;
 	if (argc == 3){
 		pid = ft_atoi(argv[1]);
-		success = send_signal(pid, argv[2]);
+		while (argv[2][i])
+		{
+			success = send_signal(pid, argv[2][i]);
+			if (success == -1)
+			{
+				perror("Error sending signal");
+				// if kill() fails, it returns errno to indicate the type or error
+				return (errno);
+			}
+			i++;
+		}
 	}
-	if (success == 0)
-			return EXIT_SUCCESS;
+	return EXIT_SUCCESS;
 }
 
 // if SIGUSR1-> bit 0
