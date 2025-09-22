@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpazjimenez <maria-j2@student.42malaga.    +#+  +:+       +#+        */
+/*   By: maria-j2 <maria-j2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 18:26:08 by maria-j2          #+#    #+#             */
-/*   Updated: 2025/09/21 15:15:54 by mpazjimenez      ###   ########.fr       */
+/*   Updated: 2025/09/22 17:40:19 by maria-j2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	main(int argc, char **argv)
 			}
 			i++;
 		}
+		send_signal(pid, '\0');
 	}
 	return EXIT_SUCCESS;
 }
@@ -51,12 +52,12 @@ int	send_signal(pid_t pid, unsigned char octet)
 		if (octet & (1 << i))
 		{
 			success = kill(pid, SIGUSR2);
-			usleep(100);
+			usleep(5000);
 		}
 		else
 		{
 			success = kill(pid, SIGUSR1);
-			usleep(100);
+			usleep(5000);
 		}
 		i--;
 	}

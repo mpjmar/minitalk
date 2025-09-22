@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpazjimenez <maria-j2@student.42malaga.    +#+  +:+       +#+        */
+/*   By: maria-j2 <maria-j2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 16:47:24 by maria-j2          #+#    #+#             */
-/*   Updated: 2025/09/21 18:04:55 by mpazjimenez      ###   ########.fr       */
+/*   Updated: 2025/09/22 16:53:48 by maria-j2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ int	main(void)
 	ft_printf("Server PID: %d\n", getpid());
 	sa.sa_handler = signal_handler;
 	sigemptyset(&sa.sa_mask);
-	sigaddset(&sa.sa_mask, SIGUSR1);
-	sigaddset(&sa.sa_mask, SIGUSR2);
+	// sigaddset(&sa.sa_mask, SIGUSR1);
+	// sigaddset(&sa.sa_mask, SIGUSR2);
 	sa.sa_flags = 0;
-	sigaction(SIGUSR1, &sa, NULL);
-	sigaction(SIGUSR2, &sa, NULL);
+	// sigaction(SIGUSR1, &sa, NULL);
+	// sigaction(SIGUSR2, &sa, NULL);
 	if (sigaction(SIGUSR1, &sa, NULL) == -1 || sigaction(SIGUSR2, &sa, NULL) == -1)
 	{
 		ft_printf("Error: Failed to set up signal handlers.\n");
@@ -50,12 +50,14 @@ void	signal_handler(int signum)
 	{
 		if (char_in_progress == '\0')
 		{
-			ft_printf("\nMessage complete!\n");
-			char_in_progress = 0;
-			bit_counter = 0;
-			return ;
+			write (1, "\n", 1);
+			// ft_printf("\nMessage complete!\n");
+			// char_in_progress = 0;
+			// bit_counter = 0;
+			//return ;
 		}
-		ft_printf("%c", char_in_progress);
+		else
+			write (1, &char_in_progress, 1);
 		char_in_progress = 0;
 		bit_counter = 0;
 	}
