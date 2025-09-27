@@ -6,12 +6,15 @@
 /*   By: maria-j2 <maria-j2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 18:26:08 by maria-j2          #+#    #+#             */
-/*   Updated: 2025/09/22 17:40:19 by maria-j2         ###   ########.fr       */
+/*   Updated: 2025/09/27 18:20:04 by maria-j2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minitalk.h"
+
+// Global flag used for synchronization between the signal handler and the main program.
+volatile sig_atomic_t ack = 0;
 
 int	main(int argc, char **argv)
 {
@@ -19,6 +22,7 @@ int	main(int argc, char **argv)
 	int	pid;
 	int	i;
 
+	signal(SIGUSR1, ack_handler);
 	i = 0;
 	if (argc == 3){
 		pid = ft_atoi(argv[1]);
@@ -38,6 +42,12 @@ int	main(int argc, char **argv)
 	return EXIT_SUCCESS;
 }
 
+void	ack_handler(int signum)
+{
+	(void)signum;
+	ack = 1;
+}
+
 // if SIGUSR1-> bit 0
 // if SIGUSR2-> bit 1
 
@@ -49,16 +59,15 @@ int	send_signal(pid_t pid, unsigned char octet)
 	i = 7;
 	while (i >= 0)
 	{
+		ack = 0;
 		if (octet & (1 << i))
-		{
 			success = kill(pid, SIGUSR2);
-			usleep(5000);
-		}
 		else
-		{
 			success = kill(pid, SIGUSR1);
-			usleep(5000);
-		}
+		if (success == -1)
+			return (-1);
+		while (!ack)
+			pause();
 		i--;
 	}
 	return (success);

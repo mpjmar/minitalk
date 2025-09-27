@@ -6,7 +6,7 @@
 /*   By: maria-j2 <maria-j2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 16:47:24 by maria-j2          #+#    #+#             */
-/*   Updated: 2025/09/22 16:53:48 by maria-j2         ###   ########.fr       */
+/*   Updated: 2025/09/27 18:32:42 by maria-j2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,28 @@ int	main(void)
 	struct sigaction	sa;
 	
 	ft_printf("Server PID: %d\n", getpid());
-	sa.sa_handler = signal_handler;
+	sa.sa_sigaction = signal_handler;
+	sa.sa_flags = SA_SIGINFO;
 	sigemptyset(&sa.sa_mask);
-	// sigaddset(&sa.sa_mask, SIGUSR1);
-	// sigaddset(&sa.sa_mask, SIGUSR2);
-	sa.sa_flags = 0;
-	// sigaction(SIGUSR1, &sa, NULL);
-	// sigaction(SIGUSR2, &sa, NULL);
+	sigaddset(&sa.sa_mask, SIGUSR1);
+	sigaddset(&sa.sa_mask, SIGUSR2);
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
 	if (sigaction(SIGUSR1, &sa, NULL) == -1 || sigaction(SIGUSR2, &sa, NULL) == -1)
 	{
 		ft_printf("Error: Failed to set up signal handlers.\n");
 		return (EXIT_FAILURE);
 	}
 	while (1)
-		pause();
+		usleep(1);
 	return (EXIT_SUCCESS);
 }
 
-void	signal_handler(int signum)
+void	signal_handler(int signum, siginfo_t *info, void *context)
 {
 	static unsigned char	char_in_progress = 0;
 	static int				bit_counter = 0;
+	(void)context;
 
 	char_in_progress <<= 1;
 	if (signum == SIGUSR2)
@@ -49,16 +50,11 @@ void	signal_handler(int signum)
 	if (bit_counter == 8)
 	{
 		if (char_in_progress == '\0')
-		{
 			write (1, "\n", 1);
-			// ft_printf("\nMessage complete!\n");
-			// char_in_progress = 0;
-			// bit_counter = 0;
-			//return ;
-		}
 		else
 			write (1, &char_in_progress, 1);
 		char_in_progress = 0;
 		bit_counter = 0;
 	}
+	kill(info->si_pid, SIGUSR1);
 }

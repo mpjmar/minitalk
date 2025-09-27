@@ -6,7 +6,7 @@
 /*   By: maria-j2 <maria-j2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 18:26:30 by maria-j2          #+#    #+#             */
-/*   Updated: 2025/09/22 15:47:25 by maria-j2         ###   ########.fr       */
+/*   Updated: 2025/09/27 18:26:57 by maria-j2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@
 # include "libft/libft.h"
 
 // client
-int	send_signal(pid_t pid, unsigned char octet);
+void	ack_handler(int signum);
+int		send_signal(pid_t pid, unsigned char octet);
 
 // server
-void	signal_handler(int signum);
+void	signal_handler(int signum, siginfo_t *info, void *context);
 
 #endif
