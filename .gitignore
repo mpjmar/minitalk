@@ -1,0 +1,38 @@
+# Compilados y objetos
+*.o
+*.out
+*.obj
+*.exe
+*.a
+*.so
+*.dll
+
+# Archivos de depuración y core dumps
+*.dSYM/
+*.stackdump
+core
+
+# Archivos temporales y de respaldo
+*~
+*.swp
+*.bak
+*.tmp
+
+# Archivos generados por editores
+.vscode/
+.idea/
+*.code-workspace
+
+# Archivos de logs
+*.log
+
+# Archivos generados por Make
+Makefile.in
+Makefile~
+
+# Archivos ocultos de sistema
+.DS_Store
+
+# Carpetas de build
+build/
+dist/
