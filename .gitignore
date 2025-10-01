@@ -6,6 +6,7 @@
 *.a
 *.so
 *.dll
+.obj/
 
 # Archivos de depuración y core dumps
 *.dSYM/
