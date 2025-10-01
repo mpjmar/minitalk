@@ -6,7 +6,7 @@
 /*   By: maria-j2 <maria-j2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 16:47:24 by maria-j2          #+#    #+#             */
-/*   Updated: 2025/09/27 18:32:42 by maria-j2         ###   ########.fr       */
+/*   Updated: 2025/10/01 17:37:05 by maria-j2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 int	main(void)
 {
 	struct sigaction	sa;
-	
+
 	ft_printf("Server PID: %d\n", getpid());
 	sa.sa_sigaction = signal_handler;
 	sa.sa_flags = SA_SIGINFO;
@@ -27,7 +27,8 @@ int	main(void)
 	sigaddset(&sa.sa_mask, SIGUSR2);
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
-	if (sigaction(SIGUSR1, &sa, NULL) == -1 || sigaction(SIGUSR2, &sa, NULL) == -1)
+	if (sigaction(SIGUSR1, &sa, NULL) == -1
+		|| sigaction(SIGUSR2, &sa, NULL) == -1)
 	{
 		ft_printf("Error: Failed to set up signal handlers.\n");
 		return (EXIT_FAILURE);
@@ -41,8 +42,8 @@ void	signal_handler(int signum, siginfo_t *info, void *context)
 {
 	static unsigned char	char_in_progress = 0;
 	static int				bit_counter = 0;
-	(void)context;
 
+	(void)context;
 	char_in_progress <<= 1;
 	if (signum == SIGUSR2)
 		char_in_progress |= 1;
