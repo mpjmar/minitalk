@@ -6,7 +6,7 @@
 /*   By: maria-j2 <maria-j2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 18:26:08 by maria-j2          #+#    #+#             */
-/*   Updated: 2025/10/01 17:39:04 by maria-j2         ###   ########.fr       */
+/*   Updated: 2025/10/01 18:50:24 by maria-j2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int argc, char **argv)
 			success = send_signal(pid, argv[2][i]);
 			if (success == -1)
 			{
-				ft_printf("Error sending signal");
+				ft_printf("Error sending signal\n");
 				return (1);
 			}
 			i++;
@@ -69,6 +69,7 @@ int	send_signal(pid_t pid, unsigned char octet)
 			return (-1);
 		while (!g_ack)
 			pause();
+		usleep(500);
 		i--;
 	}
 	return (success);

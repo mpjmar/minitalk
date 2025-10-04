@@ -6,7 +6,7 @@
 /*   By: maria-j2 <maria-j2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 16:47:24 by maria-j2          #+#    #+#             */
-/*   Updated: 2025/10/01 17:37:05 by maria-j2         ###   ########.fr       */
+/*   Updated: 2025/10/01 18:48:50 by maria-j2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(void)
 		return (EXIT_FAILURE);
 	}
 	while (1)
-		usleep(1);
+		pause();
 	return (EXIT_SUCCESS);
 }
 
